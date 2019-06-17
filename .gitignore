@@ -1,0 +1,7 @@
+# pdf files
+*.pdf
+# datafile
+*.trim
+*.tree
+*.err
+
