@@ -1,5 +1,5 @@
 # 17-06 Antoine: takes care of skeleton
-the flow has been decomposed as follows:
+8:the flow has been decomposed as follows:
 input alignement -> 
 compute the entropy of each column -> 
 trim the aligned sequences -> 
@@ -15,5 +15,9 @@ echo bin/compute_trim.sh 0.6 ali1.msl > ali1.msl.trim
 echo bin/compute_tree.sh ali1.msl.trim > ali1.msl.trim.tree
 echo bin/compute_tree_diff.sh ali1.msl.trim.tree > ali1.msl.trim.tree.err
 ```
+
+5pm:now I fixed a README so that everyone sees how to use the makefile
+
+
 
 All good 
