@@ -22,19 +22,19 @@ all: $(errfiles)
 # This target matches the pattern of the err file names I chose.
 # To be able to compute an errfile, we need the infered tree file
 %.trim.tree.err: $(BIN)/compute_tree_diff.sh %.trim.tree
-	echo $^ > $@
+	/bin/bash $^ > $@
 
 
 # This target matches the pattern of the files containing infered tree.
 # To be able to infer a tree, we need the trimmed alignement to be computed.
 %.trim.tree: $(BIN)/compute_tree.sh %.trim
-	echo $^ > $@
+	/bin/bash $^ > $@
 
 
 # This target matches the pattern of the files containing the trimmed alignement.
 # To be able to compute a trimmed alignement we need the original .msl file and the value of the threshold.
 %.trim: $(BIN)/compute_trim.sh
-	echo $^ $(threshold) $* > $@
+	/bin/bash $^ $(threshold) $* > $@
 
 
 # Avoid deleting intermediate files when the final .err files is computed.
