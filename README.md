@@ -22,18 +22,12 @@ Function | Script | Input | Output
 :--------|:-------- |:---- |:-----
 Aligned sequences trimming          | `bin/compute_trim.sh` | \*.msl | \*.msl.trim
 Tree inference                      | `bin/compute_tree.sh` | \*.msl.trim |\*.msl.trim.tree
-dist(original tree, infered tree)   |  `bin/compute_diff` | \*.msl.trim.tree | \*.msl.trim.tree.err
+dist(original tree, infered tree)   |  `bin/compute_diff.sh` | \*.msl.trim.tree | \*.msl.trim.tree.err
 
 
 The names of the inputs and outputs are such that the content of a file is clear from its name.
 All shell scripts in `bin/` have as input a file matching one of the pattern in the nomenclature.
 The scripts write on `stdout` and the Makefile takes care of writing the output to the corresponding file.
-
-In the example above,
-- `ali1.msl` is an example input file in fasta format.
-- `ali1.msl.trim` contains the trimmed input file in fast format also.
-- `ali1.msl.trim.tree` contains the tree infered from the trimmed input file.
-- `ali1.msl.trim.tree.err` contains the error between the real and infered tree.
 
 The advantage of saving to files is that we will not need to reproduce intermediate files all the time.
 The downside is that it might slow down the program with lots of read/write.
@@ -48,7 +42,7 @@ $ bash --version
 GNU bash, version 4.4.19(1)-release (x86_64-pc-linux-gnu)
 ...
 ```
-We will write more on the way.
+We will write more later.
 
 ## Example run
 To see the different steps to be executed with threshold 0.5 on a dummy input file `ali1.msl`, run:
@@ -79,7 +73,3 @@ $ make in_dir=data/symmetric_0.5 -n | head -n 6
 ```
 Here, `make` automatically fetches the `.msl` files in the specified folder and performs the three operations (trimming, tree computation and tree difference) on each file automatically.
 Note 1: We can parallelize the computation using `make -j 2 ...` instead.
-
-
-## Nomenclature
-
