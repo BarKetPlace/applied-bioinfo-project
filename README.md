@@ -18,11 +18,12 @@ Three tasks are left for us to implement.
 
 Each of the three tasks described above will be performed in a separate `bash` file.
 
-| function | script | Input | Output |
-|: --------:|:--------:|:----:|:-----:|
-| Aligned sequences trimming | `bin/compute_trim.sh` | \*.msl | \*.msl.trim|
-| Tree inference | `bin/compute_tree.sh` | \*.msl.trim |\*.msl.trim.tree|
-| dist(original tree, infered tree) |  `bin/compute_diff` | \*.msl.trim.tree | \*.msl.trim.tree.err| 
+function | script | Input | Output
+--------:|:--------:|:----:|:-----
+Aligned sequences trimming          | `bin/compute_trim.sh` | \*.msl | \*.msl.trim
+Tree inference                      | `bin/compute_tree.sh` | \*.msl.trim |\*.msl.trim.tree
+dist(original tree, infered tree)   |  `bin/compute_diff` | \*.msl.trim.tree | \*.msl.trim.tree.err
+
 
 The names of the inputs and outputs are such that the content of a file is clear from its name.
 All shell scripts in `bin/` have as input a file matching one of the pattern in the nomenclature.
