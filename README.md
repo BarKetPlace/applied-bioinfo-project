@@ -56,6 +56,7 @@ $ make threshold=0.5 ali1.msl.trim.tree.err -n
 
 Above we ask to create a dummy target `ali1.msl.trim.tree.err`, with threshold=0.5.
 The Makefile is written so that `make` figures out that to create `ali1.msl.trim.tree.err`, it has to create some intermediate files first.
+
 Note 1: `make -n` does not execute anything and only prints what would have been executed had `-n` not been written.
 
 ## Complete run
@@ -72,4 +73,5 @@ $ make in_dir=data/symmetric_0.5 -n | head -n 6
 ...
 ```
 Here, `make` automatically fetches the `.msl` files in the specified folder and performs the three operations (trimming, tree computation and tree difference) on each file automatically.
+
 Note 1: We can parallelize the computation using `make -j 2 ...` instead.
