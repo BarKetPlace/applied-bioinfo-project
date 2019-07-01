@@ -26,8 +26,9 @@ dist(original tree, infered tree)   |  `bin/compute_diff.sh` | \*.msl.trim.tree 
 
 
 The names of the inputs and outputs are such that the content of a file is clear from its name.
+For instance, a file with extension `.msl.trim.tree` contains a *tree* computed from *trimmed* aligned *msl* sequences.
 All shell scripts in `bin/` have as input a file matching one of the pattern in the nomenclature.
-The scripts write on `stdout` and the Makefile takes care of writing the output to the corresponding file.
+The scripts write to `stdout` and the Makefile takes care of writing the output to the corresponding file.
 
 The advantage of saving to files is that we will not need to reproduce intermediate files all the time.
 The downside is that it might slow down the program with lots of read/write.
@@ -54,8 +55,8 @@ $ make threshold=0.5 ali1.msl.trim.tree.err -n
 /bin/bash bin/compute_tree_diff.sh ali1.msl.trim.tree > ali1.msl.trim.tree.err
 ```
 
-Above we ask to create a dummy target `ali1.msl.trim.tree.err`, with threshold=0.5.
-The Makefile is written so that `make` figures out that to create `ali1.msl.trim.tree.err`, it has to create some intermediate files first.
+Above we ask to create a dummy target `ali1.msl.trim.tree.err`, with threshold=0.5 on the trimming part.
+The Makefile is written so that `make` figures out that to create `ali1.msl.trim.tree.err`, it has to create all intermediate files first.
 
 Note 1: `make -n` does not execute anything and only prints what would have been executed had `-n` not been written.
 
