@@ -21,3 +21,19 @@ echo bin/compute_tree_diff.sh ali1.msl.trim.tree > ali1.msl.trim.tree.err
 
 
 All good 
+
+# 03-07 Antoine starts working on the tree distance computation
+9.30am: Adds a virtual environment with dendropy package
+```bash
+source pyenv/bin/activate
+```
+10am: The tree files are in `newick` schema. In python: 
+```python
+import dendropy
+tree=dendropy.Tree.get(path="symmetric_0.5.tree",schema="newick")
+```
+10.48am: Run a tree distance computation with
+```bash
+$ bin/compute_tree_diff.sh data/symmetric_0.5/symmetric_0.5.tree data/asymmetric_1.0/asymmetric_1.0.tree 
+16
+```
