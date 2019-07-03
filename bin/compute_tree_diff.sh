@@ -3,7 +3,7 @@ import sys
 import os
 
 import dendropy
-from dendropy.calculate.treecompare import symmetric_difference as uweighted_Robinson_Foulds_d
+from dendropy.calculate.treecompare import weighted_robinson_foulds_distance as tree_dist
 
 if __name__ == "__main__":
 	usage = "Compute Robinson-Foulds distance between two trees in NEWICK format.\n\
@@ -21,5 +21,5 @@ if __name__ == "__main__":
 	tns = dendropy.TaxonNamespace()
 	trees = tuple([dendropy.Tree.get(path=x,schema="newick",taxon_namespace=tns) for x in tree_files])
 		
-	print(uweighted_Robinson_Foulds_d(*trees))
+	print(tree_dist(*trees))
 	sys.exit(0)
