@@ -1,5 +1,7 @@
 # pdf files
 *.pdf
+# Virtual environment
+pyenv/
 # datafile
 *.trim
 *.tree
