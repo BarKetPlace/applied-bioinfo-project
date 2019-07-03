@@ -34,16 +34,41 @@ The advantage of saving to files is that we will not need to reproduce intermedi
 The downside is that it might slow down the program with lots of read/write.
 
 ## Install
-We need at least `bash`, `make` for the project. (Anyone using Windows ?)
-```
+We need `bash`, `make`, a `python3` interpeter and `virtualenv` for the project. (Anyone using Windows ?)
+```bash
 $ make -v
 GNU Make 4.1
 ...
 $ bash --version
 GNU bash, version 4.4.19(1)-release (x86_64-pc-linux-gnu)
 ...
+$ python3 --version
+Python 3.6.8
+$ virtualenv --version
+15.1.0 
 ```
-We will write more later.
+## Python virtual environment 
+Virtual environments are useful to create a standalone python environment.
+Once activated, the python interpreter can only use packages installed within the virtual environment.
+
+Go to the project root folder and run the following command:
+```bash
+$ virtualenv -p python3 pyenv
+```
+
+A folder containing a raw python3 interpreter has been created in `pyenv/`.
+Activate the environment and install the necessary package.
+```bash
+$ source pyenv/bin/activate
+$ pip install dendropy
+```
+
+To come back to the default system python interpreter run:
+```bash
+$ deactivate
+```
+
+When we run our code, we should make sure that the virtual environment is activated.
 
 ## Example run
 To see the different steps to be executed with threshold 0.5 on a dummy input file `ali1.msl`, run:
