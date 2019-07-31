@@ -34,3 +34,12 @@ Modules needed to be installed prior to use:
 * numpy  
 * biopython  
 
+Example of usage with default threshold (0.5)
+```bash
+$ python3 bin/compute_trim.py data/symmetric_0.5/s001.align.1.msl
+```
+
+Example of usage with modified threshold
+```bash
+$ python3 bin/compute_trim.py data/symmetric_0.5/s001.align.1.msl --threshold 3
+```
