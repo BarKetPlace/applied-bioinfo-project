@@ -16,7 +16,7 @@ def entropy(s):
 
 Made a python script containing the entropy function: `applied-bioinfo-project/bin/calculate_entropy.py`.
 
-**16:00 - Trim msl using entropy threshold**
+**16:00 - Trim msl using entropy threshold**  
 Made a first draft of a script to process a raw msl file (fasta format) and return trimmed sequences based on given entropy threshold.
 Default threshold is set to 0.5.
 
@@ -28,7 +28,7 @@ What still needs to be done:
 
 I have tested the script on one msl file and it seems to be working, but please proof read and test it yourselves as well.
 
-Script: `applied-bioinfo-project/bin/comute_trim.sh`
+Script: `applied-bioinfo-project/bin/compute_trim.py`
 
 Modules needed to be installed prior to use:  
 * numpy  
