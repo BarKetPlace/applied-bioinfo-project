@@ -1,9 +1,6 @@
 """
-Calculate Shannon entropy using the math and Counter modules.
-Script obtained from https://rosettacode.org/wiki/Entropy#Python
-and is designed for Python ≥ 2.7.
-
-Counter creates a dictionary with each letter in given string and the frequency count for that letter within the string.
+Calculate Shannon entropy using the 'math' and 'Counter' python modules.
+Script adapted from https://rosettacode.org/wiki/Entropy#Python
 
 L.F., 190731
 """
