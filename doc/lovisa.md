@@ -30,3 +30,7 @@ I have tested the script on one msl file and it seems to be working, but please 
 
 Script: `applied-bioinfo-project/bin/comute_trim.sh`
 
+Modules needed to be installed prior to use:  
+* numpy  
+* biopython  
+
