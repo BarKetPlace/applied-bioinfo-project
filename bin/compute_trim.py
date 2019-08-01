@@ -15,7 +15,7 @@ from collections import Counter
 
 
 def parse_msl(file_path):
-    print("[1/3] Parsing msl file...", file=sys.stderr)
+    # print("[1/3] Parsing msl file...", file=sys.stderr)
     all_seqs = []
     all_ids = []
     all_desc = []
@@ -32,7 +32,7 @@ def compute_entropy(input_matrix):
     """
     Compute Shannon entropy on each column of the input array.
     """
-    print("[2/3] Computing entropy...", file=sys.stderr)
+    # print("[2/3] Computing entropy...", file=sys.stderr)
     col_entropy = []
     for column in input_matrix.T:
         col_entropy.append(entropy(column))
@@ -53,13 +53,13 @@ def trim_columns(input_matrix, entropy_list, threshold=0.5):
     Trim columns from the msl matrix by providing a list of entropy values and specifying an entropy threshold
     to be used when selecting columns. I.e. only keep columns which entropy exceeds or equals the given threshold.
     """
-    print("[3/3] Trimming bases...", file=sys.stderr)
-    if input_matrix.shape[1]==len(entropy_list):
+    # print("[3/3] Trimming bases...", file=sys.stderr)
+    if input_matrix.shape[1] == len(entropy_list):
         entropy_bool = [x >= threshold for x in entropy_list]
         trimmed_matrix = input_matrix[:, entropy_bool]
         return trimmed_matrix
     else:
-        raise IndexError("input matrix dimensions do not match that of input entropy list.")
+        raise IndexError("Input matrix dimensions do not match that of input entropy list.")
 
 
 def matrix_to_fasta(trimmed_matrix, all_desc):
@@ -74,13 +74,10 @@ def main(file_path, threshold):
     try:
         msl_matrix, msl_ids, msl_desc = parse_msl(file_path)
 
-        #print(msl_ids)
-        #print(msl_matrix[:10])
-
         msl_entropy = compute_entropy(msl_matrix)
         msl_trimmed = trim_columns(msl_matrix, msl_entropy, threshold=threshold)
 
-        print("[Trimming complete!]", file=sys.stderr)
+        # print("[Trimming complete!]", file=sys.stderr)
         matrix_to_fasta(msl_trimmed, msl_desc)
 
     except Exception as e:
