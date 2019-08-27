@@ -37,3 +37,17 @@ tree=dendropy.Tree.get(path="symmetric_0.5.tree",schema="newick")
 $ bin/compute_tree_diff.sh data/symmetric_0.5/symmetric_0.5.tree data/asymmetric_1.0/asymmetric_1.0.tree 
 16
 ```
+
+# 27-08
+## Install python interpreter from requirement file
+```bash
+$ virtualenv -p python3 pyenv
+$ source pyenv/bin/activate
+$ pip install -r requirements.txt
+```
+
+## Fix the makefile to run python script directly.
+```bash
+$ make ali1.msl.trim threshold=0.6 -n
+python bin/compute_trim.py --threshold 0.6 ali1.msl > ali1.msl.trim
+```
