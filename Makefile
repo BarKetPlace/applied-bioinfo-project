@@ -7,6 +7,10 @@ ifndef in_dir
 	in_dir=data/symmetric_0.5
 endif
 
+ifndef threshold
+	threshold=0.5
+endif
+
 # infiles contains all .msl files in the in_dir directory
 infiles=$(shell echo $(in_dir)/*.msl)
 
@@ -33,8 +37,8 @@ all: $(errfiles)
 
 # This target matches the pattern of the files containing the trimmed alignement.
 # To be able to compute a trimmed alignement we need the original .msl file and the value of the threshold.
-%.trim: $(BIN)/compute_trim.sh
-	/bin/bash $^ $(threshold) $* > $@
+%.trim: $(BIN)/compute_trim.py
+	python $^ --threshold $(threshold) $* > $@
 
 
 # Avoid deleting intermediate files when the final .err files is computed.

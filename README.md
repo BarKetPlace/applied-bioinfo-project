@@ -20,7 +20,7 @@ Each of the three tasks described above will be performed in a separate `bash` f
 
 Function | Script | Input | Output
 :--------|:-------- |:---- |:-----
-Aligned sequences trimming          | `bin/compute_trim.sh` | \*.msl | \*.msl.trim
+Aligned sequences trimming          | `bin/compute_trim.py` | \*.msl | \*.msl.trim
 Tree inference                      | `bin/compute_tree.sh` | \*.msl.trim |\*.msl.trim.tree
 dist(original tree, infered tree)   |  `bin/compute_diff.sh` | \*.msl.trim.tree | \*.msl.trim.tree.err
 
