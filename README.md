@@ -75,7 +75,7 @@ To see the different steps to be executed with threshold 0.5 on a dummy input fi
 
 ```
 $ make threshold=0.5 ali1.msl.trim.tree.err -n
-/bin/bash bin/compute_trim.sh 0.5 ali1.msl > ali1.msl.trim
+python bin/compute_trim.py --threshold 0.5 ali1.msl > ali1.msl.trim
 /bin/bash bin/compute_tree.sh ali1.msl.trim > ali1.msl.trim.tree
 /bin/bash bin/compute_tree_diff.sh ali1.msl.trim.tree > ali1.msl.trim.tree.err
 ```
@@ -90,10 +90,10 @@ Note 1: `make -n` does not execute anything and only prints what would have been
 To see what would be executed if the algorihm were to be run on an entire folder, run:
 ```
 $ make in_dir=data/symmetric_0.5 -n | head -n 6
-/bin/bash bin/compute_trim.sh  data/symmetric_0.5/s001.align.1.msl > data/symmetric_0.5/s001.align.1.msl.trim
+python bin/compute_trim.py --threshold 0.5 data/symmetric_0.5/s001.align.1.msl > data/symmetric_0.5/s001.align.1.msl.trim
 /bin/bash bin/compute_tree.sh data/symmetric_0.5/s001.align.1.msl.trim > data/symmetric_0.5/s001.align.1.msl.trim.tree
 /bin/bash bin/compute_tree_diff.sh data/symmetric_0.5/s001.align.1.msl.trim.tree > data/symmetric_0.5/s001.align.1.msl.trim.tree.err
-/bin/bash bin/compute_trim.sh  data/symmetric_0.5/s002.align.1.msl > data/symmetric_0.5/s002.align.1.msl.trim
+python bin/compute_trim.py --threshold 0.5 data/symmetric_0.5/s002.align.1.msl > data/symmetric_0.5/s002.align.1.msl.trim
 /bin/bash bin/compute_tree.sh data/symmetric_0.5/s002.align.1.msl.trim > data/symmetric_0.5/s002.align.1.msl.trim.tree
 /bin/bash bin/compute_tree_diff.sh data/symmetric_0.5/s002.align.1.msl.trim.tree > data/symmetric_0.5/s002.align.1.msl.trim.tree.err
 ...
