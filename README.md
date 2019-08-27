@@ -60,9 +60,7 @@ A folder containing a raw python3 interpreter has been created in `pyenv/`.
 Activate the environment and install the necessary package.
 ```bash
 $ source pyenv/bin/activate
-$ pip install dendropy
-$ pip install numpy
-$ pip install biopython
+$ pip install -r requirements.txt
 ```
 
 To come back to the default system python interpreter run:
