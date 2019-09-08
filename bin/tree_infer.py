@@ -1,14 +1,9 @@
-
 import argparse
 from Bio import Phylo
 from Bio import SeqIO
 from Bio import AlignIO
 from Bio.Phylo.TreeConstruction import DistanceCalculator
 from Bio.Phylo.TreeConstruction import DistanceTreeConstructor
-
-#Convert muscle format into phylip, which can be used in AlignIO.Read v=becuse i didn't manage to make it run with msl
-#write it into another file (temp.phy)
-
 
 parser = argparse.ArgumentParser(description = 'Create a dendrogram from a trimmed .msl alignmnet')
 parser.add_argument('file_pth', type = str, help = 'path to the .msl file')
