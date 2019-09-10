@@ -1,4 +1,5 @@
 import argparse
+import sys
 from Bio import Phylo
 from Bio import SeqIO
 from Bio import AlignIO
@@ -21,12 +22,12 @@ align = AlignIO.read('temp.phy', 'phylip')
 distm = DistanceCalculator('identity').get_distance(align)
 
 #print out the distance Matrix
-print('\nDistance Matrix')
-print(distm)
+print('\nDistance Matrix',file=sys.stderr)
+print(distm,file=sys.stderr)
 
 #calculate the dendrogam using UPGMA algorithm
 tree = DistanceTreeConstructor().upgma(distm)
 
 #print out he dendrogram
-print('\nDendrogram')
+print('\nDendrogram',file=sys.stderr)
 Phylo.draw_ascii(tree)
