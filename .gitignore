@@ -3,7 +3,10 @@
 # Virtual environment
 pyenv/
 # datafile
+data/
 *.trim
 *.tree
 *.err
 
+# what is that ?
+.idea/
