@@ -1,6 +1,7 @@
 SHELL=/bin/bash
 BIN=bin
 DATA=data
+RESULTS=results
 
 # The default behavior is to run all computation on the directory data/symmetric_0.5
 ifndef thresholds
@@ -22,8 +23,8 @@ trimfiles=$(foreach fname,$(infiles),$(add_out))
 
 errfiles=$(addsuffix .tree.err,$(trimfiles))
 
-make_res=$(shell echo $(folder)/trim$(thresholds).res)
-res_file=$(foreach folder,$(in_dirs),$(make_res))
+make_res=$(shell echo $(RESULTS)/$(folder)/trim$(thresholds).res)
+res_file=$(foreach folder,$(shell basename $(in_dirs)),$(make_res))
 
 trim_target := $(shell echo %.trim$(thresholds))
 
