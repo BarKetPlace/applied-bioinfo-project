@@ -40,9 +40,10 @@ summary: $(res_file)
 	@echo "Summary done"
 
 %.res:
-	$(eval current_folder=$(shell dirname $@))
+	$(eval current_exp=$(shell basename $(shell dirname $@)))
 	$(eval current_th=$(shell echo $@ | sed -e 's/^.*trim//g' -e 's/.res//g'))
-	cat $(current_folder)/*.trim$(current_th).tree.err > $@
+	mkdir -p $(shell dirname $@)
+	cat $(DATA)/$(current_exp)/*.trim$(current_th).tree.err > $@
 
 # This target matches the pattern of the err file names.
 # To be able to compute an errfile, we need the infered tree file
