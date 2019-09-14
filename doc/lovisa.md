@@ -43,3 +43,27 @@ Example of usage with modified threshold
 ```bash
 $ python3 bin/compute_trim.py data/symmetric_0.5/s001.align.1.msl --threshold 3
 ```
+  
+  
+## 2019-09-14  
+**12:00 – Make R script for plotting output**  
+I wrote an R script for reading all .res files and plotting the trimming threshold vs the symmetric distance. 
+The script uses the information given in the folder name (e.g. "symmetric_0.5") to determine the tree structure and the mutation frequency, 
+and it takes the trimming threshold from the file name (e.g. "trim0.5.res"). 
+The median and standard error of the symmetric distances is calculated from each file before plotting the data. 
+The output plot is saved as a png called "results.png" in the results directory.  
+  
+I decided to write it in R instead of python since that is the language I am currently more used to when generating plots. 
+  
+  
+**16:00 – Test run the plot script from command line**
+
+To run the plot script, type the following in the command line:
+  
+```bash
+$ R < bin/plot_output.R --no-save
+``
+  
+Dependent packages should hopefully be automatically installed if required when running the script.
+
+
