@@ -35,9 +35,9 @@ for (group in msa_groups) {
   
 }
 
-#' Alter dummy data for group 1 and 2
-res_df[[msa_groups[1]]]$error <- res_df[[msa_groups[1]]]$error + sample(1:50, length(res_df[[msa_groups[1]]]$error), replace = TRUE)
-res_df[[msa_groups[2]]]$error <- res_df[[msa_groups[2]]]$error + sample(1:10, length(res_df[[msa_groups[2]]]$error), replace = TRUE)
+#' IF TESTING: Alter dummy data for group 1 and 2
+# res_df[[msa_groups[1]]]$error <- res_df[[msa_groups[1]]]$error + sample(1:50, length(res_df[[msa_groups[1]]]$error), replace = TRUE)
+# res_df[[msa_groups[2]]]$error <- res_df[[msa_groups[2]]]$error + sample(1:10, length(res_df[[msa_groups[2]]]$error), replace = TRUE)
 
 #' Bind datasets
 res_df_all <- bind_rows(res_df)
@@ -59,9 +59,9 @@ p <- ggplot(statsm_summary, aes(x = trim_thr, y = mean, ymin = mean - mean_se, y
   geom_line(stat = "identity", size = 1) +
   geom_point(stat = "identity", color = "grey30", size = 1) +
   geom_errorbar(width = 0, color = "grey30") +
-  labs(title = "", y = "Robinson-Foulds distance", x = "Trimming threshold (Shannon entropy)", 
+  labs(title = "", 
+       y = "Robinson-Foulds distance", x = "Trimming threshold (Shannon entropy)", 
        color ="Mutation rate", shape = "Mutation rate") +
-  # ylim(850, 950) +
   facet_wrap(~tree) +
   theme_linedraw() +
   theme(plot.title = element_text(hjust = 0.5),
