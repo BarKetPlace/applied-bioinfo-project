@@ -62,7 +62,7 @@ To run the plot script, type the following in the command line:
   
 ```bash
 $ R < bin/plot_output.R --no-save
-``
+```
   
 Dependent packages should hopefully be automatically installed if required when running the script.
 
