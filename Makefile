@@ -114,6 +114,19 @@ FORCE:
 #	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
 #	python $^ --threshold $(th) $* > $@
 
+clean: clean-res clean-err clean-tree clean-trim
+
+clean-res:
+	rm -f $(RESULTS)/**/*.res
+clean-err:
+	rm -f $(DATA)/**/*.err
+
+clean-tree:
+	rm -f $(DATA)/**/*trim*.tree
+
+clean-trim:
+	rm -f $(DATA)/**/*.trim*
+
 
 
 # Avoid deleting intermediate files when the final .err files is computed.
