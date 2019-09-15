@@ -19,12 +19,12 @@ for (group in msa_groups) {
   for (fname in res_data_fnames) {
     res_info <- tail(unlist(strsplit(fname, split = "/")), n = 2)
     
-    if (res_info[1] == group & i == 1 & res_info[2] != "trim0.res") {  # TODO: 'trim0.res' file currently empty = ignore
+    if (res_info[1] == group & i == 1) {
       df <- setNames(data.frame(read.table(fname)), nm = "error")
       df$msa_group <- group
       df$trim_thr <- as.numeric(gsub("trim", "", gsub(".res", "", res_info[2])))
       res_df[[group]] <- df
-    } else if (res_info[1] == group & i > 1 & res_info[2] != "trim0.res") {  # TODO: 'trim0.res' file currently empty = ignore
+    } else if (res_info[1] == group & i > 1) {
       df <- setNames(data.frame(read.table(fname)), nm = "error")
       df$msa_group <- group
       df$trim_thr <- as.numeric(gsub("trim", "", gsub(".res", "", res_info[2])))
