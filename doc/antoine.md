@@ -51,3 +51,29 @@ $ pip install -r requirements.txt
 $ make ali1.msl.trim threshold=0.6 -n
 python bin/compute_trim.py --threshold 0.6 ali1.msl > ali1.msl.trim
 ```
+
+# 10-09
+## Fix the tree computation script
+## Add the trimming threshold to the files name
+
+```bash
+$ make in_dirs=data/symmetric_0.5 data/symmetric_0.5/s001.align.1.msl.trim0.4.tree.err -n -B
+python bin/compute_trim.py --threshold 0.4 data/symmetric_0.5/s001.align.1.msl > data/symmetric_0.5/s001.align.1.msl.trim0.4
+python bin/tree_infer.py data/symmetric_0.5/s001.align.1.msl.trim0.4 > data/symmetric_0.5/s001.align.1.msl.trim0.4.tree
+python bin/compute_tree_diff.py data/symmetric_0.5/s001.align.1.msl.trim0.4.tree data/symmetric_0.5/symmetric_0.5.tree > data/symmetric_0.5/s001.align.1.msl.trim0.4.tree.err
+```
+
+## todo: need to find a way to have the %.trim$(th) rules work properly
+Right now all the rules have to be written manually
+
+## 17-09:
+
+- Alright the %.trim$(th) rules are now automatically generated and stored in Makefile\_trim.
+- I changed the file listing command
+```bash
+find_files=$(shell echo $(folder)/s{001..010}.align.1.msl)
+```
+This runs much faster than a call to `ls` and allows flexibility on the choice of the number of files.
+
+- Added the results ran on 10 .msl files in `results/`
+
