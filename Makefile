@@ -38,6 +38,11 @@ test:
 	@echo $(infiles)
 	@echo $(res_file)
 
+
+plot: summary
+	R < bin/plot_output.R --no-save
+
+
 summary: $(res_file)
 	@echo "Summary done"
 
