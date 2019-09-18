@@ -62,7 +62,7 @@ p <- ggplot(statsm_summary, aes(x = trim_thr, y = mean, ymin = mean - mean_se, y
   labs(title = "", 
        y = "Robinson-Foulds distance", x = "Trimming threshold (Shannon entropy)", 
        color ="Mutation rate", shape = "Mutation rate") +
-  facet_wrap(~tree) +
+  facet_wrap(~tree, scales="free_y") +
   theme_linedraw() +
   theme(plot.title = element_text(hjust = 0.5),
         strip.text.x = element_text(size = 15),
