@@ -55,7 +55,7 @@ def trim_columns(input_matrix, entropy_list, threshold=0.5):
     """
     # print("[3/3] Trimming bases...", file=sys.stderr)
     if input_matrix.shape[1] == len(entropy_list):
-        entropy_bool = [x => threshold for x in entropy_list]
+        entropy_bool = [x >= threshold for x in entropy_list]
         trimmed_matrix = input_matrix[:, entropy_bool]
         return trimmed_matrix
     else:
