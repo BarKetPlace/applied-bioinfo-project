@@ -17,7 +17,7 @@ find_files=$(shell echo $(folder)/s{001..010}.align.1.msl)
 
 infiles=$(foreach folder,$(in_dirs),$(find_files))
 
-add_out=$(shell echo $(fname).trim$(thresholds))
+add_out=$(shell echo $(fname).entropy.trim$(thresholds))
 trimfiles=$(foreach fname,$(infiles),$(add_out))
 
 errfiles=$(addsuffix .tree.err,$(trimfiles))
@@ -34,9 +34,11 @@ all: $(errfiles)
 
 test:
 	@echo $(thresholds)
-	@echo $(in_dirs)
-	@echo $(infiles)
-	@echo $(res_file)
+	@echo $(errfiles)
+
+	#@echo $(in_dirs)
+	#@echo $(infiles)
+	#@echo $(res_file)
 
 
 plot: summary
@@ -65,6 +67,8 @@ summary: $(res_file)
 %.tree: $(BIN)/tree_infer.py % Makefile_trim
 	python $< $* > $@
 
+%.entropy: $(BIN)/calculate_entropy.py %
+	python $^ > $@
 
 include Makefile_trim
 
@@ -79,7 +83,7 @@ Makefile_trim: FORCE
 FORCE:
 
 
-clean: clean-res clean-err clean-tree clean-trim
+clean: clean-res clean-err clean-tree clean-trim clean-entropy
 
 clean-res:
 	rm -f $(RESULTS)/**/*.res
@@ -92,6 +96,9 @@ clean-tree:
 clean-trim:
 	rm -f $(DATA)/**/*.trim*
 	rm -f Makefile_trim
+
+clean-entropy:
+	rm -f $(DATA)/**/*.entropy*
 
 
 # Avoid deleting intermediate files when the final .err files is computed.
