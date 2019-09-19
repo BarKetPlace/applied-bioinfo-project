@@ -28,26 +28,6 @@ def parse_msl(file_path):
     return seq_matrix, all_ids, all_desc
 
 
-def compute_entropy(input_matrix):
-    """
-    Compute Shannon entropy on each column of the input array.
-    """
-    # print("[2/3] Computing entropy...", file=sys.stderr)
-    col_entropy = []
-    for column in input_matrix.T:
-        col_entropy.append(entropy(column))
-
-    return col_entropy
-
-
-def entropy(s):
-    """
-    Function for calculating Shannon entropy on given string.
-    """
-    p, lns = Counter(s), float(len(s))
-    return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
-
-
 def trim_columns(input_matrix, entropy_list, threshold=0.5):
     """
     Trim columns from the msl matrix by providing a list of entropy values and specifying an entropy threshold
@@ -70,11 +50,16 @@ def matrix_to_fasta(trimmed_matrix, all_desc):
         print(">" + all_desc[i] + "\n" + ''.join(trimmed_matrix[i, :]))
 
 
+def read_entropy(fname):
+    with open(fname, "r") as f:
+        return list(map(float, f.readlines()[0].split(",")))
+
+
 def main(file_path, threshold):
     try:
-        msl_matrix, msl_ids, msl_desc = parse_msl(file_path)
+        msl_matrix, msl_ids, msl_desc = parse_msl(file_path.replace(".entropy", ""))
 
-        msl_entropy = compute_entropy(msl_matrix)
+        msl_entropy = read_entropy(file_path)
         msl_trimmed = trim_columns(msl_matrix, msl_entropy, threshold=threshold)
 
         # print("[Trimming complete!]", file=sys.stderr)
@@ -88,7 +73,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Trim bases from raw .msl file based on Shannon entropy')
     parser.add_argument('file', type=str,
-                        help="Path to input msl file")
+                        help="Path to input entropy file")
     parser.add_argument('--threshold', type=float, default=0.5,
                         help="Shannon entropy threshold to be used when trimming (default is 0.5)")
     args = parser.parse_args()

@@ -5,7 +5,7 @@ RESULTS=results
 
 # The default behavior is to run all computation on the directory data/symmetric_0.5
 ifndef thresholds
-	thresholds={0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1}
+	thresholds=$(shell echo "{`LANG=en_US seq -f "%g" -s, 0 0.5 2`,`LANG=en_US seq -f "%g" -s, 2 0.1 4`}")
 endif
 
 # infiles contains all .msl files in the in_dir directory
@@ -13,18 +13,17 @@ ifndef in_dirs
 	in_dirs=$(shell ls -d $(DATA)/*)
 endif
 
-
-find_files=$(wildcard $(folder)/*.msl)
+find_files=$(shell echo $(folder)/s{001..010}.align.1.msl)
 
 infiles=$(foreach folder,$(in_dirs),$(find_files))
 
-add_out=$(shell echo $(fname).trim$(thresholds))
+add_out=$(shell echo $(fname).entropy.trim$(thresholds))
 trimfiles=$(foreach fname,$(infiles),$(add_out))
 
 errfiles=$(addsuffix .tree.err,$(trimfiles))
 
-make_res=$(shell echo $(RESULTS)/$(folder)/trim$(thresholds).res)
-res_file=$(foreach folder,$(shell basename $(in_dirs)),$(make_res))
+make_res=$(shell echo $(RESULTS)/$(shell basename $(folder))/trim$(thresholds).res)
+res_file=$(foreach folder,$(in_dirs),$(make_res))
 
 trim_target := $(shell echo %.trim$(thresholds))
 
@@ -34,7 +33,17 @@ all: $(errfiles)
 	cat $^	
 
 test:
-	@echo $(res_file)
+	@echo $(thresholds)
+	@echo $(errfiles)
+
+	#@echo $(in_dirs)
+	#@echo $(infiles)
+	#@echo $(res_file)
+
+
+plot: summary
+	R < bin/plot_output.R --no-save
+
 
 summary: $(res_file)
 	@echo "Summary done"
@@ -55,66 +64,26 @@ summary: $(res_file)
 
 # This target matches the pattern of the files containing infered tree.
 # To be able to infer a tree, we need the trimmed alignement to be computed.
-%.tree: $(BIN)/tree_infer.py %
+%.tree: $(BIN)/tree_infer.py % Makefile_trim
+	python $< $* > $@
+
+%.entropy: $(BIN)/calculate_entropy.py %
 	python $^ > $@
 
+include Makefile_trim
 
 # This target matches the pattern of the files containing the trimmed alignement.
 # To be able to compute a trimmed alignement we need the original .msl file and the value of the threshold.
-
-%.trim0: $(BIN)/compute_trim.py % FORCE
-	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-	python $< --threshold $(th) $* > $@
-
-%.trim0.1: $(BIN)/compute_trim.py % FORCE
-	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-	python $< --threshold $(th) $* > $@
-
-%.trim0.2: $(BIN)/compute_trim.py % FORCE
-	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-	python $< --threshold $(th) $* > $@
-
-%.trim0.3: $(BIN)/compute_trim.py % FORCE
-	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-	python $< --threshold $(th) $* > $@
-
-%.trim0.4: $(BIN)/compute_trim.py % FORCE
-	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-	python $< --threshold $(th) $* > $@
-
-%.trim0.5: $(BIN)/compute_trim.py % FORCE
-	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-	python $< --threshold $(th) $* > $@
-
-%.trim0.6: $(BIN)/compute_trim.py % FORCE
-	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-	python $< --threshold $(th) $* > $@
-
-%.trim0.7: $(BIN)/compute_trim.py % FORCE
-	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-	python $< --threshold $(th) $* > $@
-
-%.trim0.8: $(BIN)/compute_trim.py % FORCE
-	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-	python $< --threshold $(th) $* > $@
-
-%.trim0.9: $(BIN)/compute_trim.py % FORCE
-	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-	python $< --threshold $(th) $* > $@
-
-%.trim1: $(BIN)/compute_trim.py % FORCE
-	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-	python $< --threshold $(th) $* > $@
-
-
-
-FORCE:
+Makefile_trim: FORCE
+	rm -f Makefile_trim;\
+	for t in $(shell echo $(thresholds)); do\
+		echo -e "%.trim$$t: $(BIN)/compute_trim.py %\n\tpython $$""< --threshold $$t $$""* > $$""@\n" >> Makefile_trim;\
+	done;\
 	
-#%.trim0.75: $(BIN)/compute_trim.py
-#	$(eval th=$(shell echo $@ | sed 's/^.*trim//g'))
-#	python $^ --threshold $(th) $* > $@
+FORCE:
 
-clean: clean-res clean-err clean-tree clean-trim
+
+clean: clean-res clean-err clean-tree clean-trim clean-entropy
 
 clean-res:
 	rm -f $(RESULTS)/**/*.res
@@ -126,7 +95,10 @@ clean-tree:
 
 clean-trim:
 	rm -f $(DATA)/**/*.trim*
+	rm -f Makefile_trim
 
+clean-entropy:
+	rm -f $(DATA)/**/*.entropy*
 
 
 # Avoid deleting intermediate files when the final .err files is computed.

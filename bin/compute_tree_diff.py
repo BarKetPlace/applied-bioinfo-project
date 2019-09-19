@@ -3,7 +3,9 @@ import sys
 import os
 
 import dendropy
-from dendropy.calculate.treecompare import weighted_robinson_foulds_distance as tree_dist
+from dendropy.calculate.treecompare import \
+	weighted_robinson_foulds_distance, euclidean_distance
+
 
 if __name__ == "__main__":
 	usage = "Compute Robinson-Foulds distance between two trees in NEWICK format.\n\
@@ -15,11 +17,14 @@ if __name__ == "__main__":
 		sys.exit(1)
 
 	# Parse arguments
-	tree_files=[os.path.abspath(x) for x in sys.argv[1:]]
+	tree_files = [os.path.abspath(x) for x in sys.argv[1:]]
 	
 	# Read trees
 	tns = dendropy.TaxonNamespace()
-	trees = tuple([dendropy.Tree.get(path=x,schema="newick",taxon_namespace=tns) for x in tree_files])
-		
-	print(tree_dist(*trees))
+	trees = tuple([dendropy.Tree.get(path=x, schema="newick", taxon_namespace=tns)
+				   for x in tree_files])
+
+	# print(weighted_robinson_foulds_distance(*trees))
+	print(euclidean_distance(*trees))
+
 	sys.exit(0)
