@@ -25,7 +25,7 @@ if __name__ == "__main__":
     #print(distm, file=sys.stderr)
 
     #calculate the dendrogam using UPGMA algorithm
-    tree = DistanceTreeConstructor().upgma(distm)
+    tree = DistanceTreeConstructor().nj(distm)
 
     #print out he dendrogram
     print(tree.format('newick'))
