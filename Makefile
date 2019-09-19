@@ -64,13 +64,18 @@ summary: $(res_file)
 
 # This target matches the pattern of the files containing infered tree.
 # To be able to infer a tree, we need the trimmed alignement to be computed.
-%.tree: $(BIN)/tree_infer.py % Makefile_trim
-	python $< $* > $@
+%.tree: $(BIN)/tree_infer.py %
+	bin/FastTree -quiet < $* > $@
 
 %.entropy: $(BIN)/calculate_entropy.py %
 	python $^ > $@
 
+ifndef trimal
 include Makefile_trim
+else
+%.trim10: %
+	bin/trimal -in $(shell echo $* | sed 's/.entropy//g') -automated1 -fasta -out $@
+endif
 
 # This target matches the pattern of the files containing the trimmed alignement.
 # To be able to compute a trimmed alignement we need the original .msl file and the value of the threshold.
