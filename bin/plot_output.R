@@ -68,4 +68,8 @@ p <- ggplot(statsm_summary, aes(x = trim_thr, y = mean, ymin = mean - mean_se, y
         strip.text.x = element_text(size = 15),
         axis.title=element_text(size = 10))
 
+# Save plot
 png(filename = file.path(dir_res, "result.png"), width = 2000, height = 1000, res = 300); p; dev.off()
+
+# Save summarized stats table
+write.table(x = statsm_summary, file = file.path(dir_res, "result.tsv"), quote = F, sep = "\t", row.names = F, col.names = T)
