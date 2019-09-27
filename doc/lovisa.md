@@ -70,7 +70,7 @@ Dependent packages should hopefully be automatically installed if required when 
   
   
 ## 2019-09-26  
-**Write on project report**
+**Write on project report**   
 Added text for method section about MSA Entropy Trimming and made a simple figure illustrating an example of how the trimming was performed.  
   
   
