@@ -67,5 +67,16 @@ $ R < bin/plot_output.R --no-save
 ```
   
 Dependent packages should hopefully be automatically installed if required when running the script.
-
+  
+  
+## 2019-09-26  
+**Write on project report**
+Added text for method section about MSA Entropy Trimming and made a simple figure illustrating an example of how the trimming was performed.  
+  
+  
+## 2019-09-27  
+**09:45 – Work on plot script**  
+Updated plot_output.R script so that it also writes the summarized result data as a tsv file alongside the result plot.  
+  
+This table can then be used as input for another plot script where we compare the TrimAl method with our best trimming results.  
 
