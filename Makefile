@@ -5,7 +5,7 @@ RESULTS=results
 
 # The default behavior is to run all computation on the directory data/symmetric_0.5
 ifndef thresholds
-	thresholds=$(shell echo "{`LANG=en_US seq -f "%g" -s, 0 0.5 2`,`LANG=en_US seq -f "%g" -s, 2 0.1 4`,10}")
+	thresholds=$(shell echo "{`LANG=en_US seq -f "%g" -s, 0 0.5 2`,`LANG=en_US seq -f "%g" -s, 2 0.1 4`,Al,Not}")
 endif
 
 # infiles contains all .msl files in the in_dir directory
@@ -13,7 +13,7 @@ ifndef in_dirs
 	in_dirs=$(shell ls -d $(DATA)/*)
 endif
 
-find_files=$(shell echo $(folder)/s{001..010}.align.1.msl)
+find_files=$(shell echo $(folder)/s{001..002}.align.1.msl)
 
 infiles=$(foreach folder,$(in_dirs),$(find_files))
 
@@ -46,9 +46,7 @@ plot: summary
 
 
 summary: $(res_file)
-	for trimal_res in $(shell find results/ -type d -name trim10.res); do
-		echo $$trimal_res ;\
-	done
+	tar -cf results.tar results/
 	@echo "Summary done"
 
 %.res:
@@ -73,12 +71,17 @@ summary: $(res_file)
 %.entropy: $(BIN)/calculate_entropy.py %
 	python $^ > $@
 
-ifndef trimal
-include Makefile_trim
-else
-%.trim10: %
+
+
+
+%.trimNot: %
+	ln -s $(shell echo `basename $* | sed 's/.entropy//g'`) $*.trimNot
+
+%.trimAl: %
 	bin/trimal -in $(shell echo $* | sed 's/.entropy//g') -automated1 -fasta -out $@
-endif
+
+# Has to be put below the two previous one so that the trimAl and trimNot targets are ignored in Makefile_trim
+include Makefile_trim
 
 # This target matches the pattern of the files containing the trimmed alignement.
 # To be able to compute a trimmed alignement we need the original .msl file and the value of the threshold.
