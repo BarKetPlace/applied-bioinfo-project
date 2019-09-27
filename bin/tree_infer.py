@@ -12,20 +12,20 @@ if __name__ == "__main__":
     # read the sequences in phylip format and align
     #align = AlignIO.read('temp.phy', 'phylip')
 
-    align = AlignIO.read(fname,'fasta')
+    align = AlignIO.read(fname, 'fasta')
 
     # Print the alignment
-    #print(align)
+    # print(align)
 
-    #calculate distance matrix
+    # calculate distance matrix
     distm = DistanceCalculator('identity').get_distance(align)
 
-    #print out the distance Matrix
-    #print('\nDistance Matrix', file=sys.stderr)
-    #print(distm, file=sys.stderr)
+    # print out the distance Matrix
+    # print('\nDistance Matrix', file=sys.stderr)
+    # print(distm, file=sys.stderr)
 
-    #calculate the dendrogam using UPGMA algorithm
+    # calculate the Dendrogam using UPGMA algorithm
     tree = DistanceTreeConstructor().nj(distm)
 
-    #print out he dendrogram
+    # print out he Dendrogram
     print(tree.format('newick'))
