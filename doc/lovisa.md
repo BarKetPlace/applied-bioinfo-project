@@ -79,4 +79,12 @@ Added text for method section about MSA Entropy Trimming and made a simple figur
 Updated plot_output.R script so that it also writes the summarized result data as a tsv file alongside the result plot.  
   
 This table can then be used as input for another plot script where we compare the TrimAl method with our best trimming results.  
+  
+Made a R script, plot_comparison.R, for collecting information about the RF distances at the different mutation rates for each of the methods (MET, trimAl, and no trimming). 
+For MET, the threshold (<4) giving the lowest RF difference was selected for comparison, while the 'no trimming' data was picked from the trim4.res result file.  
+  
+trimAl was run using part of our pipeline, and the results will be strored in files called trim10.res (?). 
+Since the files were not available at the time of writing this script, I've collected the trim.0.5.res and preliminary called them trimAl results. 
+This needs to be changed before plotting the final results! (TODO)  
+  
 
