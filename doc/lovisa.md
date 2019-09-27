@@ -44,6 +44,10 @@ Example of usage with modified threshold
 $ python3 bin/compute_trim.py data/symmetric_0.5/s001.align.1.msl --threshold 3
 ```
   
+## 2019-09-10  
+**Group meeting**  
+Met up with the group to discuss project progress so far and how to proceed.    
+  
   
 ## 2019-09-14  
 **12:00 – Make R script for plotting output**  
@@ -69,8 +73,13 @@ $ R < bin/plot_output.R --no-save
 Dependent packages should hopefully be automatically installed if required when running the script.
   
   
+## 2019-09-19  
+**Group meeting**  
+Met up with the group to discuss project progress so far and how to proceed.  
+ 
+  
 ## 2019-09-26  
-**Write on project report**
+**Write on project report**   
 Added text for method section about MSA Entropy Trimming and made a simple figure illustrating an example of how the trimming was performed.  
   
   
