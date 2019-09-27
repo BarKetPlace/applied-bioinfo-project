@@ -5,7 +5,7 @@ RESULTS=results
 
 # The default behavior is to run all computation on the directory data/symmetric_0.5
 ifndef thresholds
-	thresholds=$(shell echo "{`LANG=en_US seq -f "%g" -s, 0 0.5 2`,`LANG=en_US seq -f "%g" -s, 2 0.1 4`}")
+	thresholds=$(shell echo "{`LANG=en_US seq -f "%g" -s, 0 0.5 2`,`LANG=en_US seq -f "%g" -s, 2 0.1 4`,10}")
 endif
 
 # infiles contains all .msl files in the in_dir directory
@@ -46,6 +46,9 @@ plot: summary
 
 
 summary: $(res_file)
+	for trimal_res in $(shell find results/ -type d -name trim10.res); do
+		echo $$trimal_res ;\
+	done
 	@echo "Summary done"
 
 %.res:
