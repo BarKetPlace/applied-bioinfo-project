@@ -1,3 +1,5 @@
+Applied Bioinformatics Projects - Log of Haris Babačić
+
 # September 9th: read the pros and cons of the software for trimming sequences
 # Decided for trimAI as explained in the report and downloaded the package. 
 # Explanation in the paper (doi:10.1093/bioinformatics/btp348)
@@ -67,12 +69,12 @@ $ trimal -in Api0000038.msl -gt 0.8 -htmlout ex02.html
 # Use the automated method
 $ trimal -compareset Api0000038.msl -automated1 -htmlout ex03.html
 
-# Based on the results in the simulations run by the authors, the -automated1 algorhitm 
-# performed the best when the outcome is the Roberston-Foulds' distance
+# Based on the results in the simulations run by the authors, the -automated1 algorithm 
+# performed the best when the outcome is the Roberston-Foulds' (RF) distance
 
 
 # September 17th - cloned the github repository to my computer
-git clone https://github.com/BarKetPlace/applied-bioinfo-project.git
+$ git clone https://github.com/BarKetPlace/applied-bioinfo-project.git
 
 # Installed virtual python environment
 bash
@@ -83,6 +85,31 @@ $ pip install upgrade
 
 
 
+# September 19th: Meeting with the group
+# We have gone through the project code and tried to compile the bits and pieces
+# We have plotted the RF distance for the inferred trees on symmetric
+# and asymmetric trees using entropy thresholds and found discrepant results to our 
+# hypotheses, based on common sense.
+
+# Therefore, we tried to locate the source of the discrepancy:
+# 1. First, we trimmed the trees using the -automated1 algorithm of trimal, to check if
+# our approach in trimming was wrong. 
+# 2. After obtaining the same results, where trimmed asymmetric trees had lower 
+# RF distance and the trimmed trees with higher mutation rate
+# also had lower RF distance, we deduced that the error in the pipeline had to be the 
+# approaches we used in either tree inference or the tree difference.
+# 3. We decided to change the RF distance by calculating the distance between the trees
+# based on the geometric mean of false positives and false negatives.
+# And indeed the results were in the lines with the hypotheses that the symmetric trees
+# and lower mutation rate had lower distances.
+# 4. We have then tried to change the method of tree inference - FastTree, 
+# but got the same tree inference as with the previous method.
+# 5. Finally, we assumed that the error might be in the RF distance
+# calculation, because we have used a weighted method for calculating the RF distance.
+# Eventually, after changing the code to calculate an unweighted RF distance, we got 
+# the fitting results
+
+# September 22nd: Started writing a draft of the report
 
 
 
