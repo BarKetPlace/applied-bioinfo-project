@@ -13,7 +13,7 @@ ifndef in_dirs
 	in_dirs=$(shell ls -d $(DATA)/*)
 endif
 
-find_files=$(shell echo $(folder)/s{001..002}.align.1.msl)
+find_files=$(shell echo $(folder)/s{001..050}.align.1.msl)
 
 infiles=$(foreach folder,$(in_dirs),$(find_files))
 
