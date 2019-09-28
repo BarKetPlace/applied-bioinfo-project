@@ -25,7 +25,7 @@ trim_target := $(shell echo %.trim$(thresholds))
 
 
 all: $(errfiles)
-	cat $^	
+	@echo "Done: error files"	
 
 test:
 	@echo $(thresholds)
@@ -39,7 +39,7 @@ plot: summary
 
 summary: $(res_file)
 	tar -cf results.tar results/
-	@echo "Summary done"
+	@echo "Done: result files"
 
 %.res:
 	$(eval current_exp=$(shell basename $(shell dirname $@)))
