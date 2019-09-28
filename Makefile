@@ -13,37 +13,29 @@ ifndef in_dirs
 	in_dirs=$(shell ls -d $(DATA)/*)
 endif
 
-find_files=$(shell echo $(folder)/s{001..050}.align.1.msl)
-
+find_files=$(shell echo $(folder)/s{001..300}.align.1.msl)
 infiles=$(foreach folder,$(in_dirs),$(find_files))
-
 add_out=$(shell echo $(fname).entropy.trim$(thresholds))
 trimfiles=$(foreach fname,$(infiles),$(add_out))
-
 errfiles=$(addsuffix .tree.err,$(trimfiles))
-
 make_res=$(shell echo $(RESULTS)/$(shell basename $(folder))/trim$(thresholds).res)
 res_file=$(foreach folder,$(in_dirs),$(make_res))
 
 trim_target := $(shell echo %.trim$(thresholds))
 
 
-# typing: make       , runs the target all which depends on the err files, 
 all: $(errfiles)
 	cat $^	
 
 test:
 	@echo $(thresholds)
 	@echo $(errfiles)
-
 	#@echo $(in_dirs)
 	#@echo $(infiles)
 	#@echo $(res_file)
 
-
 plot: summary
 	R < bin/plot_output.R --no-save
-
 
 summary: $(res_file)
 	tar -cf results.tar results/
@@ -71,11 +63,8 @@ summary: $(res_file)
 %.entropy: $(BIN)/calculate_entropy.py %
 	python $^ > $@
 
-
-
-
 %.trimNot: %
-	ln -s $(shell echo `basename $* | sed 's/.entropy//g'`) $*.trimNot
+	ln -sf $(shell echo `basename $* | sed 's/.entropy//g'`) $*.trimNot
 
 %.trimAl: %
 	bin/trimal -in $(shell echo $* | sed 's/.entropy//g') -automated1 -fasta -out $@
