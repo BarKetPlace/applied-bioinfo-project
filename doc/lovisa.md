@@ -97,3 +97,9 @@ Since the files were not available at the time of writing this script, I've coll
 This needs to be changed before plotting the final results! (TODO)  
   
 
+## 2019-09-29  
+**Update and run plot scripts for new results**  
+Updated the plot_output.R and plot_comparison.R scripts to work with the new .res file names for our MET method, trimAl (trimAl.res), and no trimming (trimNo).  
+  
+New plot png files were generated and tsv tables used for the plots were saved as separate objects.  
+  
