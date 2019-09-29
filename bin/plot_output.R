@@ -6,10 +6,11 @@ for (pkg in c("tidyverse",
   if (!require(pkg, character.only = T)) install.packages(pkg, repos = "http://cran.us.r-project.org")
   library(pkg, character.only = T)
 }
+'%!in%' <- purrr::negate('%in%')
 
 #' Read in and format data
 dir_res <- file.path(here::here(), "results")
-res_data_fnames <- list.files(path = dir_res, pattern = '.res', full.names = T, recursive = T)
+res_data_fnames <- list.files(path = dir_res, pattern = '[0-9].res', full.names = T, recursive = T)
 msa_groups <- unique(unlist(lapply(strsplit(res_data_fnames, "/" ), FUN = function(i) i[length(i)-1])))
 
 res_df <- list()
@@ -19,7 +20,7 @@ for (group in msa_groups) {
   for (fname in res_data_fnames) {
     res_info <- tail(unlist(strsplit(fname, split = "/")), n = 2)
     
-    if (res_info[1] == group & i == 1) {
+    if ( res_info[1] == group & i == 1) {
       df <- setNames(data.frame(read.table(fname)), nm = "error")
       df$msa_group <- group
       df$trim_thr <- as.numeric(gsub("trim", "", gsub(".res", "", res_info[2])))
@@ -50,8 +51,8 @@ statsm <- reshape2::melt(stats, id.vars = c("msa_group", "trim_thr", "tree", "mu
 
 sem <- function(x) sd(x)/sqrt(length(x))
 statsm_summary <- statsm %>% 
-  group_by(msa_group, trim_thr, tree, mutation_rate) %>%
-  summarise(mean = mean(value), mean_se = sem(value))
+  dplyr::group_by(msa_group, trim_thr, tree, mutation_rate) %>%
+  dplyr::summarise(mean = mean(value), mean_se = sem(value))
 
 #' Plot
 p <- ggplot(statsm_summary, aes(x = trim_thr, y = mean, ymin = mean - mean_se, ymax = mean + mean_se, 
