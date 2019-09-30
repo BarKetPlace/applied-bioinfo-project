@@ -129,8 +129,11 @@ Here, `make` automatically fetches the `.msl` files in the specified folder and 
 Note 1: We can parallelize the computation using `make -j 2 ...` instead.
 
 ## Reproduce our plots
+Warning: A major draw back of our solution is that we create and write to disk all intermediate files.
+Therefore the complete run might take several hours if one uses less than 8 processes, or if one has to read/write on a hard drive.
+
 ```bash
-$ make nlim=030 -j 10 -s
+$ make nlim=300 -j 10 -s
 $ make summary
 $ make plot
 ```
