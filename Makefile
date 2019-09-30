@@ -12,7 +12,10 @@ endif
 ifndef in_dirs
 	in_dirs=$(shell ls -d $(DATA)/*)
 endif
-nlim=010
+ifndef nlim
+	nlim=010
+endif
+
 find_files=$(shell echo $(folder)/s{001..$(nlim)}.align.1.msl)
 infiles=$(foreach folder,$(in_dirs),$(find_files))
 add_out=$(shell echo $(fname).entropy.trim$(thresholds))
@@ -58,24 +61,26 @@ summary: $(res_file)
 # This target matches the pattern of the files containing infered tree.
 # To be able to infer a tree, we need the trimmed alignement to be computed.
 %.tree: $(BIN)/tree_infer.py %
-	bin/FastTree -quiet < $* > $@
-
-%.entropy: $(BIN)/calculate_entropy.py %
-	python $^ > $@
+	$(BIN)/FastTree -quiet < $* > $@
 
 %.trimNot: %
 	ln -sf $(shell echo `basename $* | sed 's/.entropy//g'`) $*.trimNot
 
 %.trimAl: %
-	bin/trimal -in $(shell echo $* | sed 's/.entropy//g') -automated1 -fasta -out $@
+	$(BIN)/trimal -in $(shell echo $* | sed 's/.entropy//g') -automated1 -fasta -out $@
 
 # Has to be put below the two previous one so that the trimAl and trimNot targets are ignored in Makefile_trim
 include Makefile_trim
 
+
+%.entropy: $(BIN)/calculate_entropy.py %
+	python $^ > $@
+
+
 # This target matches the pattern of the files containing the trimmed alignement.
 # To be able to compute a trimmed alignement we need the original .msl file and the value of the threshold.
 Makefile_trim: FORCE
-	rm -f Makefile_trim;\
+	@rm -f Makefile_trim;\
 	for t in $(shell echo $(thresholds)); do\
 		echo -e "%.trim$$t: $(BIN)/compute_trim.py %\n\tpython $$""< --threshold $$t $$""* > $$""@\n" >> Makefile_trim;\
 	done;\

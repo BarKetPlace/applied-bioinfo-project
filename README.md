@@ -21,7 +21,7 @@ Each of the four tasks described above will be performed in a separate `bash` fi
 
 Function | Script | Input | Output
 :--------|:-------- |:---- |:-----
-Compute the Shannon entropy	    | `bin/compute_entropy.py | \*.msl| \*.msl.entropy`
+Compute the Shannon entropy	    | `bin/compute_entropy.py` | \*.msl| \*.msl.entropy
 Aligned sequences trimming          | `bin/compute_trim.py` | \*.msl | \*.msl.entropy.trim<threshold>
 Tree inference                      | `bin/compute_tree.sh` | \*.msl.trim |\*.msl.entropy.trim<threshold>.tree
 dist(original tree, infered tree)   |  `bin/compute_diff.sh` | \*.msl.trim.tree | \*.msl.entropy.trim<threshold>.tree.err
