@@ -39,9 +39,9 @@ test:
 
 plot: summary
 	R < bin/plot_output.R --no-save
+	tar -cf results.tar results/
 
 summary: $(res_file)
-	tar -cf results.tar results/
 	@echo "Done: result files"
 
 %.res:
@@ -61,7 +61,7 @@ summary: $(res_file)
 # This target matches the pattern of the files containing infered tree.
 # To be able to infer a tree, we need the trimmed alignement to be computed.
 %.tree: $(BIN)/tree_infer.py %
-	$(BIN)/FastTree -quiet < $* > $@
+	python $^ > $@
 
 %.trimNot: %
 	ln -sf $(shell echo `basename $* | sed 's/.entropy//g'`) $*.trimNot

@@ -23,7 +23,7 @@ Function | Script | Input | Output
 :--------|:-------- |:---- |:-----
 Compute the Shannon entropy	    | `bin/compute_entropy.py` | \*.msl| \*.msl.entropy
 Aligned sequences trimming          | `bin/compute_trim.py` | \*.msl | \*.msl.entropy.trim<threshold>
-Tree inference                      | `bin/compute_tree.sh` | \*.msl.trim |\*.msl.entropy.trim<threshold>.tree
+Tree inference                      | `bin/tree_infer.py` | \*.msl.trim |\*.msl.entropy.trim<threshold>.tree
 dist(original tree, infered tree)   |  `bin/compute_diff.sh` | \*.msl.trim.tree | \*.msl.entropy.trim<threshold>.tree.err
 
 
@@ -102,7 +102,7 @@ $ make thresholds=0.5 data/symmetric_0.5/s001.align.1.msl.entropy.trim0.5.tree.e
 Makefile:73: Makefile_trim: No such file or directory
 python bin/calculate_entropy.py data/symmetric_0.5/s001.align.1.msl > data/symmetric_0.5/s001.align.1.msl.entropy
 python bin/compute_trim.py --threshold 0.5 data/symmetric_0.5/s001.align.1.msl.entropy > data/symmetric_0.5/s001.align.1.msl.entropy.trim0.5
-bin/FastTree -quiet < data/symmetric_0.5/s001.align.1.msl.entropy.trim0.5 > data/symmetric_0.5/s001.align.1.msl.entropy.trim0.5.tree
+python bin/tree_infer.py data/symmetric_0.5/s001.align.1.msl.entropy.trim0.5 > data/symmetric_0.5/s001.align.1.msl.entropy.trim0.5.tree
 python bin/compute_tree_diff.py data/symmetric_0.5/s001.align.1.msl.entropy.trim0.5.tree data/symmetric_0.5/symmetric_0.5.tree > data/symmetric_0.5/s001.align.1.msl.entropy.trim0.5.tree.err
 ```
 
@@ -115,16 +115,29 @@ Note 1: `make -n` does not execute any of the processing steps and only prints w
 ## Complete run
 
 To see what would be executed if the algorihm were to be run on an entire folder, run:
-```
-$ make thresholds=0.5 in_dir=data/symmetric_0.5 -n
-python bin/compute_trim.py --threshold 0.5 data/symmetric_0.5/s001.align.1.msl > data/symmetric_0.5/s001.align.1.msl.trim
-/bin/bash bin/compute_tree.sh data/symmetric_0.5/s001.align.1.msl.trim > data/symmetric_0.5/s001.align.1.msl.trim.tree
-/bin/bash bin/compute_tree_diff.sh data/symmetric_0.5/s001.align.1.msl.trim.tree > data/symmetric_0.5/s001.align.1.msl.trim.tree.err
-python bin/compute_trim.py --threshold 0.5 data/symmetric_0.5/s002.align.1.msl > data/symmetric_0.5/s002.align.1.msl.trim
-/bin/bash bin/compute_tree.sh data/symmetric_0.5/s002.align.1.msl.trim > data/symmetric_0.5/s002.align.1.msl.trim.tree
-/bin/bash bin/compute_tree_diff.sh data/symmetric_0.5/s002.align.1.msl.trim.tree > data/symmetric_0.5/s002.align.1.msl.trim.tree.err
+```bash
+python bin/calculate_entropy.py data/asymmetric_0.5/s001.align.1.msl > data/asymmetric_0.5/s001.align.1.msl.entropy
+python bin/compute_trim.py --threshold 0.5 data/asymmetric_0.5/s001.align.1.msl.entropy > data/asymmetric_0.5/s001.align.1.msl.entropy.trim0.5
+python bin/tree_infer.py data/asymmetric_0.5/s001.align.1.msl.entropy.trim0.5 > data/asymmetric_0.5/s001.align.1.msl.entropy.trim0.5.tree
+python bin/compute_tree_diff.py data/asymmetric_0.5/s001.align.1.msl.entropy.trim0.5.tree data/asymmetric_0.5/asymmetric_0.5.tree > data/asymmetric_0.5/s001.align.1.msl.entropy.trim0.5.tree.err
+python bin/calculate_entropy.py data/asymmetric_0.5/s002.align.1.msl > data/asymmetric_0.5/s002.align.1.msl.entropy
+python bin/compute_trim.py --threshold 0.5 data/asymmetric_0.5/s002.align.1.msl.entropy > data/asymmetric_0.5/s002.align.1.msl.entropy.trim0.5
 ...
 ```
 Here, `make` automatically fetches the `.msl` files in the specified folder and performs the four operations (entropy computation,trimming, tree computation and tree difference) on each file automatically.
 
 Note 1: We can parallelize the computation using `make -j 2 ...` instead.
+
+## Reproduce our plots
+```bash
+$ make nlim=030 -j 10 -s
+$ make summary
+$ make plot
+```
+
+- The result plot is in `results/result.png`.
+
+- Al the Robinson-Foulds results are `ls results/**/*.res`
+
+- The `results` folder is archived into `results.tar`
+
