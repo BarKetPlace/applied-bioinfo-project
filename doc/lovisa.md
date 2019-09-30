@@ -57,7 +57,7 @@ and it takes the trimming threshold from the file name (e.g. "trim0.5.res").
 The median and standard error of the symmetric distances is calculated from each file before plotting the data. 
 The output plot is saved as a png called "results.png" in the results directory.  
   
-The script currently ignores "trim0.res" files, since they are empty at the moment. This should be fixed when we have fixed the content of those files, since the trimming with thr=0 (i.e. no trimming) can be regarded as the baseline we want to compare against.  
+The script currently ignores "trim0.res" files, since they are empty at the moment. This should be fixed when we have fixed the content of those files.  
   
 I decided to write it in R instead of python since that is the language I am currently more used to when generating plots. 
   
